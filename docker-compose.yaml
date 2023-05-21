@@ -1,0 +1,34 @@
+services:
+    nginx:
+        build:
+            context: ./docker/local/nginx
+        environment:
+            TZ: Asia/Tokyo
+        ports:
+            - "80:80"
+        depends_on:
+            - "go"
+
+    go:
+        build:
+            context: ./docker/local/go
+        environment:
+            TZ: Asia/Tokyo
+        ports:
+            - 8080:8080
+        volumes:
+            - ./api/:/var/www
+
+    # mysql:
+    #     build: ./docker/local/mysql
+    #     environment:
+    #         TZ: Asia/Tokyo
+    #         MYSQL_ROOT_PASSWORD: root
+    #         MYSQL_DATABASE: local
+    #     ports:
+    #         - 13306:3306
+    #     volumes:
+    #         - mysql_volume:/var/lib/mysql
+
+# volumes:
+#     mysql_volume:
