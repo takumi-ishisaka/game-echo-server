@@ -46,9 +46,9 @@ services:
         networks:
             - backend
     nginx:
-        image: nginx:latest
+        image: nginx:1.25.0
         volumes:
-            - ./docker/local/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8080:80"
         depends_on:
@@ -66,6 +66,9 @@ services:
             - db_data:/var/lib/mysql
         networks:
             - backend
+        ports:
+            - "3306:3306"
+
 networks:
     backend:
 volumes:
