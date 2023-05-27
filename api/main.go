@@ -14,5 +14,9 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, struct{ Status string }{Status: "OK"})
+	})
+
 	e.Start(":1323")
 }
