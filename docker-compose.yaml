@@ -1,34 +1,72 @@
+# services:
+#     nginx:
+#         build:
+#             context: ./docker/local/nginx
+#         environment:
+#             TZ: Asia/Tokyo
+#         ports:
+#             - "80:80"
+#         tty: true
+#         depends_on:
+#             - "go"
+
+#     go:
+#         build:
+#             context: ./docker/local/go
+#         environment:
+#             TZ: Asia/Tokyo
+#         ports:
+#             - 8080:8080
+#         volumes:
+#             - ./api/:/go/src
+
+#     # mysql:
+#     #     build: ./docker/local/mysql
+#     #     environment:
+#     #         TZ: Asia/Tokyo
+#     #         MYSQL_ROOT_PASSWORD: root
+#     #         MYSQL_DATABASE: local
+#     #     ports:
+#     #         - 13306:3306
+#     #     volumes:
+#     #         - mysql_volume:/var/lib/mysql
+
+# # volumes:
+# #     mysql_volume:
+
 services:
-    nginx:
-        build:
-            context: ./docker/local/nginx
-        environment:
-            TZ: Asia/Tokyo
-        ports:
-            - "80:80"
-        depends_on:
-            - "go"
-
     go:
-        build:
-            context: ./docker/local/go
-        environment:
-            TZ: Asia/Tokyo
-        ports:
-            - 8080:8080
+        build: ./api
         volumes:
-            - ./api/:/var/www
-
-    # mysql:
-    #     build: ./docker/local/mysql
-    #     environment:
-    #         TZ: Asia/Tokyo
-    #         MYSQL_ROOT_PASSWORD: root
-    #         MYSQL_DATABASE: local
-    #     ports:
-    #         - 13306:3306
-    #     volumes:
-    #         - mysql_volume:/var/lib/mysql
-
-# volumes:
-#     mysql_volume:
+            - ./api:/go/src:delegated
+        command: go run main.go
+        tty: true
+        depends_on:
+            - mysql
+        networks:
+            - backend
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./docker/local/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - "8080:80"
+        depends_on:
+            - go
+        networks:
+            - backend
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: local
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - backend
+networks:
+    backend:
+volumes:
+    db_data:

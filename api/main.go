@@ -1,15 +1,18 @@
+// main.go
 package main
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World!")
-}
-
 func main() {
-	http.HandleFunc("/", hello)
-	http.ListenAndServe(":8080", nil)
+	e := echo.New()
+
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello, World!")
+	})
+
+	e.Start(":1323")
 }
