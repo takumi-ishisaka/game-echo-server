@@ -1,22 +1,15 @@
-// main.go
 package main
 
 import (
-	"net/http"
+	"fmt"
+	"log"
 
-	"github.com/labstack/echo/v4"
+	"github.com/takumi-ishisaka/game-echo-server/routes"
 )
 
 func main() {
-	e := echo.New()
-
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-
-	e.GET("/health", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, struct{ Status string }{Status: "OK"})
-	})
-
-	e.Start(":1323")
+	err := routes.Run()
+	if err != nil {
+		log.Fatal(fmt.Sprintf(`{"error":"%v"}`, err))
+	}
 }
