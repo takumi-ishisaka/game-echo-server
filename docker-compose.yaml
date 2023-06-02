@@ -36,11 +36,10 @@
 
 services:
     go:
-        build: ./api
+        build:
+            context: ./api
         volumes:
-            - ./api:/go/src:delegated
-        command: go run main.go
-        tty: true
+            - ./api/src:/go/src
         depends_on:
             - mysql
         networks:

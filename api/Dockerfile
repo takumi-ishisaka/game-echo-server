@@ -1,24 +1,14 @@
 FROM golang:1.20.3
 
-# RUN apt-get update \
-#     && apt-get install -y --no-install-recommends
-
-# WORKDIR /go/src/
-
-# RUN go mod init github.com/takumi-ishisaka/game-echo-server
-# RUN go install github.com/cosmtrek/air@latest
-# RUN go mod tidy
-
-# CMD ["air", "-c", ".air.toml"]
-# Dockerfile
-
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends
 
 WORKDIR /go/src
 ENV GO111MODULE=on
 
-COPY . .
-
+COPY ./src/go.mod ./src/go.sum ./
 RUN go mod tidy
-RUN go build -o main .
 
-CMD ["./main"]
+RUN go install github.com/cosmtrek/air@v1.43.0
+
+CMD ["air", "-c", ".air.toml"]
