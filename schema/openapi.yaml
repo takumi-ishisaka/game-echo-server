@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  version: 0.0.1
+  title: "game-echo API"
+servers:
+  - url: 'http://localhost:8080/{basePath}'
+    description: "local"
+    variables:
+      basePath:
+        default: api
+tags:
+  - name: User
+    description: "ユーザー関連"
+paths:
+  /user:
+    $ref: "paths/user.yaml"

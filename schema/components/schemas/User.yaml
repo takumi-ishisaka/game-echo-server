@@ -1,0 +1,17 @@
+type: object
+description: "ユーザー情報"
+properties:
+  userId:
+    type: string
+    description: "ユーザーID"
+  name:
+    type: string
+    description: "ニックネーム"
+  playerCode:
+    type: string
+    description: "プレイヤーコード"
+  loginAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: "ログイン日時"

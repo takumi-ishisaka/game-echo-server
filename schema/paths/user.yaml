@@ -1,0 +1,25 @@
+/register:
+  post:
+    tags:
+      - User
+    description: "ユーザー登録"
+    parameters:
+      - name: name
+        in: query
+        required: true
+        description: "ニックネーム"
+        schema:
+          type: string
+    responses:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/User.yaml
+      default:
+        description: Error
+        context:
+          application/json:
+            schema:
+              $ref: ../components/responses/Error.yaml
