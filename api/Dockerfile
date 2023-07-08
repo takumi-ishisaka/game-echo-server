@@ -10,5 +10,6 @@ COPY ./src/go.mod ./src/go.sum ./
 RUN go mod tidy
 
 RUN go install github.com/cosmtrek/air@v1.43.0
+RUN go install -v github.com/rubenv/sql-migrate/...@latest
 
 CMD ["air", "-c", ".air.toml"]

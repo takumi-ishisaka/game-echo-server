@@ -1,0 +1,8 @@
+development:
+  dialect: mysql
+
+  datasource: "user:password@tcp(mysql)/local?charset=utf8mb4&parseTime=True&loc=Local"
+
+  dir: sqls
+
+  table: migrations
