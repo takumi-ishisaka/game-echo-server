@@ -10,9 +10,10 @@ import (
 )
 
 var DB *gorm.DB
-var err error
 
 func init() {
+	var err error
+
 	user := os.Getenv("MYSQL_USER")
 	password := os.Getenv("MYSQL_PASSWORD")
 	host := os.Getenv("MYSQL_HOST")
