@@ -8,6 +8,10 @@ import (
 	"github.com/takumi-ishisaka/game-echo-server/infras"
 )
 
+type User struct {
+	Name string `json:"name"`
+}
+
 func UserRegister(c echo.Context) error {
 	db, _ := infras.DB.DB()
 	defer db.Close()
